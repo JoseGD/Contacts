@@ -13,19 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
-import android.widget.Toast;
 
 public class ContactsListFragment extends ListFragment
 											 implements LoaderManager.LoaderCallbacks<Cursor>,
 											 				AdapterView.OnItemClickListener {
 
-	private final static String[] FROM_COLUMNS = {Contacts.DISPLAY_NAME_PRIMARY};
-	private final static int[] TO_IDS = {android.R.id.text1};
-	private static final String[] PROJECTION = {Contacts._ID, Contacts.LOOKUP_KEY, Contacts.DISPLAY_NAME_PRIMARY};
+	private static final String[] PROJECTION = {Contacts._ID, Contacts.LOOKUP_KEY,
+															  Contacts.DISPLAY_NAME_PRIMARY, Contacts.PHOTO_THUMBNAIL_URI};
 	private static final String SELECTION = Contacts.IN_VISIBLE_GROUP + " = 1";
 	private final static String ORDER_BY = "display_name";
 	
-	//ListView mContactsList;
 	long mContactId;
    String mContactKey;
    Uri mContactUri;
@@ -38,7 +35,7 @@ public class ContactsListFragment extends ListFragment
    public void onActivityCreated(Bundle savedInstanceState) {
    	super.onActivityCreated(savedInstanceState);
    	getLoaderManager().initLoader(0, null, this);
-   	mCursorAdapter = new ContactListAdapter(getActivity(), R.layout.contact_item, null, FROM_COLUMNS, TO_IDS, 0);
+   	mCursorAdapter = new ContactListAdapter(getActivity());
    	setListAdapter(mCursorAdapter);
    	getListView().setOnItemClickListener(this);
    }	
@@ -71,7 +68,6 @@ public class ContactsListFragment extends ListFragment
       mContactId = cursor.getLong(0);
       mContactKey = cursor.getString(1);
       mContactUri = Contacts.getLookupUri(mContactId, mContactKey);
-      //Toast.makeText(getActivity(), "Tap en " + cursor.getString(2), Toast.LENGTH_SHORT).show();
 	}
 	
 }
