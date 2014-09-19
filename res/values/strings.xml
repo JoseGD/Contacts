@@ -4,5 +4,12 @@
 	<string name="action_settings">Settings</string>
 	<string name="title_section1">Libreta de Contactos</string>
 	<string name="title_section2">Contactos locales</string>
-	<string name="emails_telnos">%1$d emails | %2$d nros.de teléfono</string>
+	<plurals name="emails">
+      <item quantity="one">%d email</item>
+      <item quantity="other">%d emails</item>
+	</plurals>
+   <plurals name="telnos">
+      <item quantity="one">%d nro. de teléfono</item>
+      <item quantity="other">%d nros. de teléfono</item>
+   </plurals>
 </resources>

@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -53,8 +54,11 @@ public class ContactListAdapter extends CursorAdapter {
       final long contactId = cursor.getLong(0);
       final ViewHolder holder = (ViewHolder) view.getTag();
       holder.displayname.setText(cursor.getString(2));
-      holder.emails_tels.setText(String.format(mContext.getString(R.string.emails_telnos),
-				 											  emailsCount(contactId), telNumbersCount(contactId)));
+      Resources res = mContext.getResources();
+      int emails = emailsCount(contactId);
+      int tels = telNumbersCount(contactId);
+      holder.emails_tels.setText(String.format(res.getQuantityString(R.plurals.emails, emails), emails) +
+      									" | " + String.format(res.getQuantityString(R.plurals.telnos, tels), tels));
       final String photoData = cursor.getString(3);
       if (photoData != null) {
          final Uri contactUri = Contacts.getLookupUri(contactId, cursor.getString(1));
