@@ -63,12 +63,17 @@ public class ContactsListFragment extends ListFragment
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,	long id) {
-		Cursor cursor = ((CursorAdapter) parent.getAdapter()).getCursor();
-		cursor.moveToPosition(position);
-      mContactId = cursor.getLong(0);
-      mContactKey = cursor.getString(1);
-      mContactUri = Contacts.getLookupUri(mContactId, mContactKey);
+		CursorAdapter adapter = (CursorAdapter) parent.getAdapter();
+		((ContactListAdapter) adapter).setTappedPosition(position);
+      adapter.getView(position, null, parent);  // convertView null to force row update (according to CursorAdapter.getView() implementation)
+      getListView().invalidateViews();
+//		Cursor cursor = adapter.getCursor();
+//		cursor.moveToPosition(position);
+//    mContactId = cursor.getLong(0);
+//    mContactKey = cursor.getString(1);
+//    mContactUri = Contacts.getLookupUri(mContactId, mContactKey);
 	}
 	
 }
+
 

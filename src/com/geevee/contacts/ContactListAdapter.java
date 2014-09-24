@@ -25,6 +25,7 @@ public class ContactListAdapter extends CursorAdapter {
 
 	private Context mContext;
 	private LayoutInflater mInflater;
+	private long mTappedPosition = -1;
 	
 	private class ViewHolder {
       TextView displayname;
@@ -39,20 +40,37 @@ public class ContactListAdapter extends CursorAdapter {
 	}
 	
 	@Override
+	public int getViewTypeCount() {
+		return 2;
+	}
+	
+	@Override
+	public int getItemViewType(int position) {
+		return (position != mTappedPosition) ? 0 : 1;
+	}
+	
+	@Override
 	public View newView(Context context, Cursor cursor, ViewGroup parent) {
-		final View itemView = mInflater.inflate(R.layout.contact_item, parent, false);
-		final ViewHolder holder = new ViewHolder();
-		holder.displayname = (TextView) itemView.findViewById(android.R.id.text1);
-		holder.emails_tels = (TextView) itemView.findViewById(android.R.id.text2);
-		holder.thumbnail = (ImageView) itemView.findViewById(android.R.id.icon);
-		itemView.setTag(holder);
+		final View itemView;
+		int pos = cursor.getPosition();
+		if (getItemViewType(pos) == 1) {
+			itemView = mInflater.inflate(R.layout.contact_item_options, parent, false);
+		} else {
+			itemView = mInflater.inflate(R.layout.contact_item, parent, false);
+			final ViewHolder holder = new ViewHolder();
+			holder.displayname = (TextView) itemView.findViewById(android.R.id.text1);
+			holder.emails_tels = (TextView) itemView.findViewById(android.R.id.text2);
+			holder.thumbnail = (ImageView) itemView.findViewById(android.R.id.icon);
+			itemView.setTag(holder);
+		}
 		return itemView;
 	}
 
 	@Override
 	public void bindView(View view, Context context, Cursor cursor) {
-      final long contactId = cursor.getLong(0);
       final ViewHolder holder = (ViewHolder) view.getTag();
+      if (holder == null) return;
+      final long contactId = cursor.getLong(0);
       holder.displayname.setText(cursor.getString(2));
       Resources res = mContext.getResources();
       int emails = emailsCount(contactId);
@@ -69,6 +87,10 @@ public class ContactListAdapter extends CursorAdapter {
       	holder.thumbnail.setImageDrawable(mContext.getResources()
       													.getDrawable(R.drawable.ic_contact_picture_holo_light));
       }
+	}
+	
+	public void setTappedPosition(long pos) {
+		mTappedPosition = pos;
 	}
 
 	private Bitmap loadContactPhotoThumbnail(String photoData) {

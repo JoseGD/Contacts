@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="match_parent"
+   android:layout_height="?android:attr/listPreferredItemHeight"
+   android:orientation="horizontal"
+   android:padding="10dp"
+   android:background="@android:color/background_light">
+	<Button
+	  android:id="@+id/view"
+	  android:layout_width="0dp"
+	  android:layout_height="wrap_content"
+	  android:layout_weight="0.5"
+	  android:textAppearance="?android:attr/textAppearanceSmall"
+	  android:text="@string/view"/>
+	<Button 
+     android:id="@+id/save"
+     android:layout_width="0dp"
+     android:layout_height="wrap_content"
+     android:layout_weight="0.5"
+     android:textAppearance="?android:attr/textAppearanceSmall"
+     android:text="@string/save"/>   
+</LinearLayout>

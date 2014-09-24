@@ -12,4 +12,6 @@
       <item quantity="one">%d nro. de teléfono</item>
       <item quantity="other">%d nros. de teléfono</item>
    </plurals>
+   <string name="view">Ver detalle</string>
+   <string name="save">Guardar</string>
 </resources>
