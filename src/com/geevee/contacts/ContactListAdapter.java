@@ -1,21 +1,16 @@
 package com.geevee.contacts;
 
-import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import android.content.Context;
-import android.content.res.AssetFileDescriptor;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.Contacts;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
@@ -77,45 +72,28 @@ public class ContactListAdapter extends CursorAdapter {
       int tels = telNumbersCount(contactId);
       holder.emails_tels.setText(String.format(res.getQuantityString(R.plurals.emails, emails), emails) +
       									" | " + String.format(res.getQuantityString(R.plurals.telnos, tels), tels));
-      final String photoData = cursor.getString(3);
-      if (photoData != null) {
+      final String thumbnailData = cursor.getString(3);
+      if (thumbnailData != null) {
          final Uri contactUri = Contacts.getLookupUri(contactId, cursor.getString(1));
          holder.thumbnail.setImageURI(contactUri);
-         Bitmap thumbnailBitmap = loadContactPhotoThumbnail(photoData);
-         holder.thumbnail.setImageBitmap(thumbnailBitmap);		
+         final Bitmap thumbnailBitmap = new PhotoLoader(mContext).loadContactPhotoThumbnail(thumbnailData);
+         holder.thumbnail.setImageBitmap(thumbnailBitmap);
+         holder.thumbnail.setOnClickListener(new OnClickListener() {
+      		public void onClick(View v) {
+      			Intent i = new Intent(mContext, PhotoActivity.class);
+      			i.putExtra("photoextra", contactId);
+      			mContext.startActivity(i);
+      		}
+      	});
       } else {
-      	holder.thumbnail.setImageDrawable(mContext.getResources()
-      													.getDrawable(R.drawable.ic_contact_picture_holo_light));
+      	holder.thumbnail.setImageDrawable
+      							  (mContext.getResources().getDrawable(R.drawable.ic_contact_picture_holo_light));
       }
 	}
 	
 	public void setTappedPosition(long pos) {
 		mTappedPosition = pos;
 	}
-
-	private Bitmap loadContactPhotoThumbnail(String photoData) {
-      AssetFileDescriptor afd = null;
-      try {
-	      Uri thumbUri;
-	      thumbUri = Uri.parse(photoData);
-	      try {
-	      	afd = mContext.getContentResolver().openAssetFileDescriptor(thumbUri, "r");
-		      FileDescriptor fileDescriptor = afd.getFileDescriptor();
-		      if (fileDescriptor != null) {
-		      	return BitmapFactory.decodeFileDescriptor(fileDescriptor, null, null);
-		      }
-	      } catch (FileNotFoundException e) {
-	         Log.d("GeeVee", "FileNotFoundException en loadContactPhotoThumbnail - No se pudo obtener foto de contacto");
-	      }
-      } finally {
-      	if (afd != null) {
-      		try {
-      			afd.close();
-            } catch (IOException e) {}
-          }
-      }
-      return null;
-	}	
 
 	private int emailsCount(long id) {
 		Cursor c = mContext.getContentResolver().query(CommonDataKinds.Email.CONTENT_URI, null,

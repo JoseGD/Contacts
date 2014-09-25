@@ -19,7 +19,8 @@ public class ContactsListFragment extends ListFragment
 											 				AdapterView.OnItemClickListener {
 
 	private static final String[] PROJECTION = {Contacts._ID, Contacts.LOOKUP_KEY,
-															  Contacts.DISPLAY_NAME_PRIMARY, Contacts.PHOTO_THUMBNAIL_URI};
+															  Contacts.DISPLAY_NAME_PRIMARY,
+															  Contacts.PHOTO_THUMBNAIL_URI};
 	private static final String SELECTION = Contacts.IN_VISIBLE_GROUP + " = 1";
 	private final static String ORDER_BY = "display_name";
 	
