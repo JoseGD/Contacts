@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -64,8 +65,21 @@ public class ContactListAdapter extends CursorAdapter {
 	@Override
 	public void bindView(View view, Context context, Cursor cursor) {
       final ViewHolder holder = (ViewHolder) view.getTag();
-      if (holder == null) return;
       final long contactId = cursor.getLong(0);
+      if (holder == null) {
+      	Button b = (Button) view.findViewById(R.id.view);
+      	if (b != null) {
+      		b.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+	      			Intent i = new Intent(mContext, ContactDetailsActivity.class);
+	      			i.putExtra("detailsextra", contactId);
+	      			mContext.startActivity(i);
+					}
+      		});
+      	}
+      	return;
+      }
       holder.displayname.setText(cursor.getString(2));
       Resources res = mContext.getResources();
       int emails = emailsCount(contactId);

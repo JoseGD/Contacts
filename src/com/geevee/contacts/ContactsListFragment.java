@@ -5,7 +5,6 @@ import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract.Contacts;
 import android.view.LayoutInflater;
@@ -24,9 +23,6 @@ public class ContactsListFragment extends ListFragment
 	private static final String SELECTION = Contacts.IN_VISIBLE_GROUP + " = 1";
 	private final static String ORDER_BY = "display_name";
 	
-	long mContactId;
-   String mContactKey;
-   Uri mContactUri;
    private ContactListAdapter mCursorAdapter;
 	
 	public ContactsListFragment() {
@@ -68,11 +64,6 @@ public class ContactsListFragment extends ListFragment
 		((ContactListAdapter) adapter).setTappedPosition(position);
       adapter.getView(position, null, parent);  // convertView null to force row update (according to CursorAdapter.getView() implementation)
       getListView().invalidateViews();
-//		Cursor cursor = adapter.getCursor();
-//		cursor.moveToPosition(position);
-//    mContactId = cursor.getLong(0);
-//    mContactKey = cursor.getString(1);
-//    mContactUri = Contacts.getLookupUri(mContactId, mContactKey);
 	}
 	
 }
