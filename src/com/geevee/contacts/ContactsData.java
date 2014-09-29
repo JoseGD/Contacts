@@ -8,8 +8,9 @@ import android.provider.ContactsContract.Data;
 
 public class ContactsData {
 		
-	private static final String[] DETAILS_PROJECTION =
+	public static final String[] DETAILS_PROJECTION =
 					{Data._ID, Data.CONTACT_ID, Data.DISPLAY_NAME_PRIMARY, Data.MIMETYPE, Data.DATA1};
+	
 	private static final String DETAILS_SELECTION =
 		   		Data.CONTACT_ID + " = ? AND (" + Data.MIMETYPE + " = ? OR " + Data.MIMETYPE + " = ?)";
 	private static final String DETAILS_ORDER = "Data.MIMETYPE desc";

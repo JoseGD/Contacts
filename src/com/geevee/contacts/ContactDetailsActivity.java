@@ -28,6 +28,7 @@ public class ContactDetailsActivity extends ListActivity
 	   	mCursorAdapter = new ContactDetailsListAdapter(this);
 	   	setListAdapter(mCursorAdapter);
 	   	getListView().setOnItemClickListener(this);
+	   	getListView().setDivider(null);
 		}
 	}
 
@@ -38,7 +39,8 @@ public class ContactDetailsActivity extends ListActivity
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-		mCursorAdapter.swapCursor(data);
+		Cursor c = mCursorAdapter.addSeparatorRowsToCursor(data);
+		mCursorAdapter.swapCursor(c);
 	}
 
 	@Override

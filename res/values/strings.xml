@@ -16,4 +16,6 @@
 	<string name="save">Guardar</string>
 	<string name="title_activity_photo">Foto del contacto</string>
 	<string name="title_activity_contact_details">Datos del contacto</string>
+	<string name="phones">TELÉFONOS</string>
+	<string name="emails">E-MAILS</string>
 </resources>
