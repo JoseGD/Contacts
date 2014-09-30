@@ -2,11 +2,9 @@ package com.geevee.contacts;
 
 import android.app.ListFragment;
 import android.app.LoaderManager;
-import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract.Contacts;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +15,6 @@ public class ContactsListFragment extends ListFragment
 											 implements LoaderManager.LoaderCallbacks<Cursor>,
 											 				AdapterView.OnItemClickListener {
 
-	private static final String[] PROJECTION = {Contacts._ID, Contacts.LOOKUP_KEY,
-															  Contacts.DISPLAY_NAME_PRIMARY,
-															  Contacts.PHOTO_THUMBNAIL_URI};
-	private static final String SELECTION = Contacts.IN_VISIBLE_GROUP + " = 1";
-	private final static String ORDER_BY = "display_name";
-	
    private ContactListAdapter mCursorAdapter;
 	
 	public ContactsListFragment() {
@@ -45,7 +37,7 @@ public class ContactsListFragment extends ListFragment
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		return new CursorLoader(getActivity(), Contacts.CONTENT_URI, PROJECTION, SELECTION, null, ORDER_BY);
+		return ContactsData.contactsCursorLoader(getActivity());
 	}
 
 	@Override

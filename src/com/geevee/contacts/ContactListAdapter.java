@@ -25,7 +25,7 @@ public class ContactListAdapter extends CursorAdapter {
 	
 	private class ViewHolder {
       TextView displayname;
-      TextView emails_tels;
+      TextView tels_emails;
       ImageView thumbnail;
    }
 
@@ -55,7 +55,7 @@ public class ContactListAdapter extends CursorAdapter {
 			itemView = mInflater.inflate(R.layout.contact_item, parent, false);
 			final ViewHolder holder = new ViewHolder();
 			holder.displayname = (TextView) itemView.findViewById(android.R.id.text1);
-			holder.emails_tels = (TextView) itemView.findViewById(android.R.id.text2);
+			holder.tels_emails = (TextView) itemView.findViewById(android.R.id.text2);
 			holder.thumbnail = (ImageView) itemView.findViewById(android.R.id.icon);
 			itemView.setTag(holder);
 		}
@@ -82,10 +82,10 @@ public class ContactListAdapter extends CursorAdapter {
       }
       holder.displayname.setText(cursor.getString(2));
       Resources res = mContext.getResources();
-      int emails = emailsCount(contactId);
       int tels = telNumbersCount(contactId);
-      holder.emails_tels.setText(String.format(res.getQuantityString(R.plurals.emails, emails), emails) +
-      									" | " + String.format(res.getQuantityString(R.plurals.telnos, tels), tels));
+      int emails = emailsCount(contactId);
+      holder.tels_emails.setText(String.format(res.getQuantityString(R.plurals.telnos, tels), tels) +
+      									" | " + String.format(res.getQuantityString(R.plurals.emails, emails), emails));
       final String thumbnailData = cursor.getString(3);
       if (thumbnailData != null) {
          final Uri contactUri = Contacts.getLookupUri(contactId, cursor.getString(1));
@@ -109,19 +109,19 @@ public class ContactListAdapter extends CursorAdapter {
 		mTappedPosition = pos;
 	}
 
-	private int emailsCount(long id) {
-		Cursor c = mContext.getContentResolver().query(CommonDataKinds.Email.CONTENT_URI, null,
-																	  CommonDataKinds.Email.CONTACT_ID + " = ?",
-																	  new String[] {String.valueOf(id)}, null);
+	private int telNumbersCount(long id) {
+		Cursor c = mContext.getContentResolver().query(CommonDataKinds.Phone.CONTENT_URI, null,
+				  													  CommonDataKinds.Phone.CONTACT_ID + " = ?",
+				  													  new String[] {String.valueOf(id)}, null);
 		int count = c.getCount();
 		c.close();
 		return count;
 	}
 	
-	private int telNumbersCount(long id) {
-		Cursor c = mContext.getContentResolver().query(CommonDataKinds.Phone.CONTENT_URI, null,
-				  													  CommonDataKinds.Phone.CONTACT_ID + " = ?",
-				  													  new String[] {String.valueOf(id)}, null);
+	private int emailsCount(long id) {
+		Cursor c = mContext.getContentResolver().query(CommonDataKinds.Email.CONTENT_URI, null,
+																	  CommonDataKinds.Email.CONTACT_ID + " = ?",
+																	  new String[] {String.valueOf(id)}, null);
 		int count = c.getCount();
 		c.close();
 		return count;
