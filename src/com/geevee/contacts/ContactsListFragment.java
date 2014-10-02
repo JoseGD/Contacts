@@ -15,7 +15,9 @@ public class ContactsListFragment extends ListFragment
 											 implements LoaderManager.LoaderCallbacks<Cursor>,
 											 				AdapterView.OnItemClickListener {
 
-   private ContactListAdapter mCursorAdapter;
+   //public static final String ARG_SECTION_NUMBER = "arg_section";
+	
+	private ContactListAdapter mCursorAdapter;
 	
 	public ContactsListFragment() {
 	}
@@ -24,6 +26,7 @@ public class ContactsListFragment extends ListFragment
    public void onActivityCreated(Bundle savedInstanceState) {
    	super.onActivityCreated(savedInstanceState);
    	getLoaderManager().initLoader(0, null, this);
+		//Toast.makeText(getActivity(), "arg = " + getArguments().getInt(ARG_SECTION_NUMBER), Toast.LENGTH_SHORT).show();
    	mCursorAdapter = new ContactListAdapter(getActivity());
    	setListAdapter(mCursorAdapter);
    	getListView().setOnItemClickListener(this);

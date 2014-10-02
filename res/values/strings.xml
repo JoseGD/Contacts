@@ -14,6 +14,8 @@
 	</plurals>
 	<string name="view">Ver detalle</string>
 	<string name="save">Guardar</string>
+	<string name="saved_contact">Contacto guardado</string>
+	<string name="not_saved_contact">Error al guardar contacto</string>
 	<string name="title_activity_photo">Foto del contacto</string>
 	<string name="title_activity_contact_details">Datos del contacto</string>
 	<string name="phones">TELÉFONOS</string>

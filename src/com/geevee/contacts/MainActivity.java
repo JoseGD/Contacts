@@ -9,21 +9,17 @@ import android.widget.ArrayAdapter;
 
 public class MainActivity extends FragmentActivity implements ActionBar.OnNavigationListener {
 
-	/**
-	 * The serialization (saved instance state) Bundle key representing the current dropdown position.
-	 */
+	// The serialization (saved instance state) Bundle key representing the current dropdown position
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		// Set up the action bar to show a dropdown list.
+   	// Set up the action bar to show a dropdown list.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-
 		// Set up the dropdown list navigation in the action bar.
 		actionBar.setListNavigationCallbacks(
 		// Specify a SpinnerAdapter to populate the dropdown list.
@@ -58,9 +54,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 	public boolean onNavigationItemSelected(int position, long id) {
 		// When the given dropdown item is selected, show its contents in the container view.
 		Fragment fragment = new ContactsListFragment();
-		//Bundle args = new Bundle();
-		//args.putInt(ContactsListFragment.ARG_SECTION_NUMBER, position + 1);
-		//fragment.setArguments(args);
+//		Bundle args = new Bundle();
+//		args.putInt(ContactsListFragment.ARG_SECTION_NUMBER, position + 1);
+//		fragment.setArguments(args);
 		getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 		return true;
 	}

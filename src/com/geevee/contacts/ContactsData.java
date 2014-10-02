@@ -2,8 +2,10 @@ package com.geevee.contacts;
 
 import android.content.Context;
 import android.content.CursorLoader;
+import android.database.Cursor;
 import android.provider.ContactsContract.CommonDataKinds.Email;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
 
@@ -34,5 +36,23 @@ public class ContactsData {
 		return new CursorLoader(context, Data.CONTENT_URI,
 										DETAILS_PROJECTION, DETAILS_SELECTION, args, DETAILS_ORDER);
 	}
-
+	
+	public static int telNumbersCount(Context context, long contactId) {
+		Cursor c = context.getContentResolver().query(CommonDataKinds.Phone.CONTENT_URI, null,
+				  													 CommonDataKinds.Phone.CONTACT_ID + " = ?",
+				  													 new String[] {String.valueOf(contactId)}, null);
+		int count = c.getCount();
+		c.close();
+		return count;
+	}
+	
+	public static int emailsCount(Context context, long contactId) {
+		Cursor c = context.getContentResolver().query(CommonDataKinds.Email.CONTENT_URI, null,
+																	 CommonDataKinds.Email.CONTACT_ID + " = ?",
+																	 new String[] {String.valueOf(contactId)}, null);
+		int count = c.getCount();
+		c.close();
+		return count;
+	}
+	
 }

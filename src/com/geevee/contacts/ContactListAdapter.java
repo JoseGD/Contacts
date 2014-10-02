@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.Contacts;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +15,7 @@ import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ContactListAdapter extends CursorAdapter {
 
@@ -67,23 +67,13 @@ public class ContactListAdapter extends CursorAdapter {
       final ViewHolder holder = (ViewHolder) view.getTag();
       final long contactId = cursor.getLong(0);
       if (holder == null) {
-      	Button b = (Button) view.findViewById(R.id.view);
-      	if (b != null) {
-      		b.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-	      			Intent i = new Intent(mContext, ContactDetailsActivity.class);
-	      			i.putExtra("detailsextra", contactId);
-	      			mContext.startActivity(i);
-					}
-      		});
-      	}
+      	setViewSaveClickListeners(view, cursor);
       	return;
       }
       holder.displayname.setText(cursor.getString(2));
       Resources res = mContext.getResources();
-      int tels = telNumbersCount(contactId);
-      int emails = emailsCount(contactId);
+      int tels = ContactsData.telNumbersCount(context, contactId);
+      int emails = ContactsData.emailsCount(context, contactId);
       holder.tels_emails.setText(String.format(res.getQuantityString(R.plurals.telnos, tels), tels) +
       									" | " + String.format(res.getQuantityString(R.plurals.emails, emails), emails));
       final String thumbnailData = cursor.getString(3);
@@ -104,27 +94,49 @@ public class ContactListAdapter extends CursorAdapter {
       							  (mContext.getResources().getDrawable(R.drawable.ic_contact_picture_holo_light));
       }
 	}
-	
+
 	public void setTappedPosition(long pos) {
 		mTappedPosition = pos;
 	}
 
-	private int telNumbersCount(long id) {
-		Cursor c = mContext.getContentResolver().query(CommonDataKinds.Phone.CONTENT_URI, null,
-				  													  CommonDataKinds.Phone.CONTACT_ID + " = ?",
-				  													  new String[] {String.valueOf(id)}, null);
-		int count = c.getCount();
-		c.close();
-		return count;
-	}
-	
-	private int emailsCount(long id) {
-		Cursor c = mContext.getContentResolver().query(CommonDataKinds.Email.CONTENT_URI, null,
-																	  CommonDataKinds.Email.CONTACT_ID + " = ?",
-																	  new String[] {String.valueOf(id)}, null);
-		int count = c.getCount();
-		c.close();
-		return count;
+	private void setViewSaveClickListeners(View view, final Cursor cursor) {
+		Button b = (Button) view.findViewById(R.id.view);
+		final long contactId = cursor.getLong(0);
+		if (b != null) {
+			b.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent i = new Intent(mContext, ContactDetailsActivity.class);
+					i.putExtra("detailsextra", contactId);
+					mContext.startActivity(i);
+				}
+			});
+		}
+		b = (Button) view.findViewById(R.id.save);
+		if (b != null) {
+			b.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					String msg = "";
+					ContactsLocalData localdata = ContactsLocalData.getInstance(mContext);
+					if (localdata.openDB()) {
+						int saveOpResult = localdata.saveContactData(contactId, cursor.getString(1),
+			  																  cursor.getString(2), cursor.getString(3));
+						switch (saveOpResult) {
+							case 0:
+								msg = mContext.getString(R.string.saved_contact);
+								break;
+							case 1:
+								msg = mContext.getString(R.string.not_saved_contact);
+								break;
+							default:
+								break;
+						}
+					}
+					Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+				}
+			});
+		}
 	}
 	
 }
