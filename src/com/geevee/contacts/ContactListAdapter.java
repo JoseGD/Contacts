@@ -66,11 +66,12 @@ public class ContactListAdapter extends CursorAdapter {
 	public void bindView(View view, Context context, Cursor cursor) {
       final ViewHolder holder = (ViewHolder) view.getTag();
       final long contactId = cursor.getLong(0);
+      final String contactName = cursor.getString(2);
       if (holder == null) {
-      	setViewSaveClickListeners(view, cursor);
+      	setViewSaveClickListeners(view, contactId, contactName, cursor.getString(1), cursor.getString(3));
       	return;
       }
-      holder.displayname.setText(cursor.getString(2));
+      holder.displayname.setText(contactName);
       Resources res = mContext.getResources();
       int tels = ContactsData.telNumbersCount(context, contactId);
       int emails = ContactsData.emailsCount(context, contactId);
@@ -99,9 +100,9 @@ public class ContactListAdapter extends CursorAdapter {
 		mTappedPosition = pos;
 	}
 
-	private void setViewSaveClickListeners(View view, final Cursor cursor) {
+	private void setViewSaveClickListeners(View view, final long contactId,
+														final String name, final String lookup, final String photo) {
 		Button b = (Button) view.findViewById(R.id.view);
-		final long contactId = cursor.getLong(0);
 		if (b != null) {
 			b.setOnClickListener(new OnClickListener() {
 				@Override
@@ -118,10 +119,9 @@ public class ContactListAdapter extends CursorAdapter {
 				@Override
 				public void onClick(View v) {
 					String msg = "";
-					ContactsLocalData localdata = ContactsLocalData.getInstance(mContext);
+					LocalContactsData localdata = LocalContactsData.getInstance(mContext);
 					if (localdata.openDB()) {
-						int saveOpResult = localdata.saveContactData(contactId, cursor.getString(1),
-			  																  cursor.getString(2), cursor.getString(3));
+						int saveOpResult = localdata.saveContactData(contactId, name, lookup, photo);
 						switch (saveOpResult) {
 							case 0:
 								msg = mContext.getString(R.string.saved_contact);

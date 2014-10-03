@@ -54,9 +54,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 	public boolean onNavigationItemSelected(int position, long id) {
 		// When the given dropdown item is selected, show its contents in the container view.
 		Fragment fragment = new ContactsListFragment();
-//		Bundle args = new Bundle();
-//		args.putInt(ContactsListFragment.ARG_SECTION_NUMBER, position + 1);
-//		fragment.setArguments(args);
+		Bundle args = new Bundle();
+		args.putInt(ContactsListFragment.ARG_SECTION_NUMBER, position + 1);
+		fragment.setArguments(args);
 		getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 		return true;
 	}

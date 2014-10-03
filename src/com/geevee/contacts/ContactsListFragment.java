@@ -5,6 +5,7 @@ import android.app.LoaderManager;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,13 @@ public class ContactsListFragment extends ListFragment
 											 implements LoaderManager.LoaderCallbacks<Cursor>,
 											 				AdapterView.OnItemClickListener {
 
-   //public static final String ARG_SECTION_NUMBER = "arg_section";
+   public static final String ARG_SECTION_NUMBER = "arg_section";
 	
+   private static final int ADDRESS_BOOK_LIST = 1;
+   private static final int LOCAL_CONTACTS_LIST = 2;
+   
 	private ContactListAdapter mCursorAdapter;
+	private int listNumber;
 	
 	public ContactsListFragment() {
 	}
@@ -25,11 +30,12 @@ public class ContactsListFragment extends ListFragment
    @Override
    public void onActivityCreated(Bundle savedInstanceState) {
    	super.onActivityCreated(savedInstanceState);
-   	getLoaderManager().initLoader(0, null, this);
-		//Toast.makeText(getActivity(), "arg = " + getArguments().getInt(ARG_SECTION_NUMBER), Toast.LENGTH_SHORT).show();
+   	listNumber = getArguments().getInt(ARG_SECTION_NUMBER);
+   	getLoaderManager().initLoader(listNumber, null, this);
    	mCursorAdapter = new ContactListAdapter(getActivity());
    	setListAdapter(mCursorAdapter);
    	getListView().setOnItemClickListener(this);
+		Log.d("Contacts", "Showing list number " + listNumber);
    }	
 	
 	@Override
@@ -40,7 +46,18 @@ public class ContactsListFragment extends ListFragment
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		return ContactsData.contactsCursorLoader(getActivity());
+		switch (id) {
+			case ADDRESS_BOOK_LIST:
+				return ContactsData.contactsCursorLoader(getActivity());
+			case LOCAL_CONTACTS_LIST:
+				LocalContactsData localdata = LocalContactsData.getInstance(getActivity());
+				if (localdata.openDB()) {
+					return localdata.localContactsCursorLoader(getActivity());
+				} else
+					return null;
+			default:
+				return null;
+		}
 	}
 
 	@Override

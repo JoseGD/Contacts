@@ -14,13 +14,11 @@ public class ContactsData {
 	private static final String[] CONTACTS_PROJECTION =
 					{Contacts._ID, Contacts.LOOKUP_KEY,
 		  			 Contacts.DISPLAY_NAME_PRIMARY, Contacts.PHOTO_THUMBNAIL_URI};
-	
 	private static final String CONTACTS_SELECTION = Contacts.IN_VISIBLE_GROUP + " = 1";
 	private final static String CONTACTS_ORDER = "display_name";
 
 	public static final String[] DETAILS_PROJECTION =
 					{Data._ID, Data.CONTACT_ID, Data.DISPLAY_NAME_PRIMARY, Data.MIMETYPE, Data.DATA1};
-	
 	private static final String DETAILS_SELECTION =
 		   		Data.CONTACT_ID + " = ? AND (" + Data.MIMETYPE + " = ? OR " + Data.MIMETYPE + " = ?)";
 	private static final String DETAILS_ORDER = "Data.MIMETYPE desc";
