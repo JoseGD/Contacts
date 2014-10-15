@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CursorAdapter;
 
 public class ContactDetailsActivity extends ListActivity
 												implements LoaderManager.LoaderCallbacks<Cursor>,
@@ -50,7 +52,16 @@ public class ContactDetailsActivity extends ListActivity
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,	long id) {
-		
+		CursorAdapter adapter = (CursorAdapter) parent.getAdapter();
+		Cursor c = ((ContactDetailsListAdapter) adapter).getCursor();
+		c.moveToPosition(position);
+		if (c.getString(3).equals(Phone.CONTENT_ITEM_TYPE)) {
+			WSCallDialogFragment dialog = new WSCallDialogFragment();
+			Bundle args = new Bundle();
+			args.putString(WSCallDialogFragment.ARG_PHONE_NUMBER, c.getString(4));
+			dialog.setArguments(args);			
+			dialog.show(getFragmentManager(), "tag_irrelevant_here");
+		}
 	}
 
 }

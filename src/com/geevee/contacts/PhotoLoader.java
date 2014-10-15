@@ -35,7 +35,7 @@ public class PhotoLoader {
 		      	return BitmapFactory.decodeFileDescriptor(fileDescriptor, null, null);
 		      }
 	      } catch (FileNotFoundException e) {
-	         Log.d("GeeVee", "FileNotFoundException en loadContactPhotoThumbnail - No se pudo obtener foto de contacto");
+	         Log.d("Contacts", "FileNotFoundException en loadContactPhotoThumbnail - No se pudo obtener foto de contacto");
 	      }
       } finally {
       	if (afd != null) {

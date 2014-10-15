@@ -25,10 +25,12 @@ public final class R {
         public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f090006;
+        public static final int action_settings=0x7f090008;
+        public static final int connecting=0x7f090006;
         public static final int contact_data=0x7f090004;
         public static final int container=0x7f090000;
         public static final int photo=0x7f090001;
+        public static final int result=0x7f090007;
         public static final int save=0x7f090003;
         public static final int separator=0x7f090005;
         public static final int view=0x7f090002;
@@ -42,6 +44,7 @@ public final class R {
         public static final int detail_item=0x7f030005;
         public static final int detail_item_separator=0x7f030006;
         public static final int fragment_main_list=0x7f030007;
+        public static final int wscall_result=0x7f030008;
     }
     public static final class menu {
         public static final int main=0x7f080000;
@@ -53,6 +56,7 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
+        public static final int connecting=0x7f05000d;
         public static final int emails=0x7f05000b;
         public static final int not_saved_contact=0x7f050007;
         public static final int phones=0x7f05000a;
@@ -63,6 +67,7 @@ public final class R {
         public static final int title_section1=0x7f050002;
         public static final int title_section2=0x7f050003;
         public static final int view=0x7f050004;
+        public static final int wscall=0x7f05000c;
     }
     public static final class style {
         /**  Base application theme, dependent on API level. This theme is replaced
