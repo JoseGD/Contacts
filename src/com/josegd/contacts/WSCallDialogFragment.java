@@ -21,7 +21,7 @@ public class WSCallDialogFragment extends DialogFragment {
 	
 	public static final String ARG_PHONE_NUMBER = "arg_phone_number";
 	
-	private static final String SERVICE_URL = "http://libphonenumber.appspot.com/phonenumberparser";
+	private static final String SERVICE_URL = "http://someserver.com/phonenumberparser";
 	private static final String ENCODING = "UTF-8";
 	private static final String DELIMITER = "--";
 	private static final String CR = "\n";
