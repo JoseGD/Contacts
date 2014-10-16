@@ -1,4 +1,4 @@
-package com.geevee.contacts;
+package com.josegd.contacts;
 
 import android.content.Context;
 import android.content.Intent;

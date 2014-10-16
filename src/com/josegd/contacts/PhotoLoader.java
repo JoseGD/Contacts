@@ -1,4 +1,4 @@
-package com.geevee.contacts;
+package com.josegd.contacts;
 
 import java.io.BufferedInputStream;
 import java.io.FileDescriptor;

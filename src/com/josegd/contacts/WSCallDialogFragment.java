@@ -1,4 +1,4 @@
-package com.geevee.contacts;
+package com.josegd.contacts;
 
 import java.io.IOException;
 import java.io.InputStream;

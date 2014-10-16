@@ -1,4 +1,4 @@
-package com.geevee.contacts;
+package com.josegd.contacts;
 
 import android.app.ListActivity;
 import android.app.LoaderManager;

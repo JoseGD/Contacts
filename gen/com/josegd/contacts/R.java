@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.geevee.contacts;
+package com.josegd.contacts;
 
 public final class R {
     public static final class attr {

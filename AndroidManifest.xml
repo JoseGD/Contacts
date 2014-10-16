@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
    xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.geevee.contacts"
-	android:versionCode="1" android:versionName="1.0" >
+	package="com.josegd.contacts"
+	android:versionCode="1" android:versionName="1.0.0" >
 
    <uses-sdk
 	  android:minSdkVersion="14" android:targetSdkVersion="19" />
@@ -16,7 +16,7 @@
 		android:label="@string/app_name"
 		android:theme="@style/AppTheme" >
 		<activity
-			android:name="com.geevee.contacts.MainActivity"
+			android:name="com.josegd.contacts.MainActivity"
 			android:label="@string/app_name" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -24,14 +24,14 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="com.geevee.contacts.PhotoActivity"
+			android:name="com.josegd.contacts.PhotoActivity"
 			android:label="@string/title_activity_photo"
-			android:parentActivityName="com.geevee.contacts.MainActivity" >
+			android:parentActivityName="com.josegd.contacts.MainActivity" >
 		</activity>
 		<activity
-			android:name="com.geevee.contacts.ContactDetailsActivity"
+			android:name="com.josegd.contacts.ContactDetailsActivity"
 			android:label="@string/title_activity_contact_details"
-			android:parentActivityName="com.geevee.contacts.MainActivity" >
+			android:parentActivityName="com.josegd.contacts.MainActivity" >
 		</activity>
    </application>
 
